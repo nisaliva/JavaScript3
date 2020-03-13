@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dog Photos</title>
+    <style>
+        body {
+        text-align: center;
+        background-color: rgb(60, 97, 128);
+        color: #fff;
+        }
+
+        #btns > button {
+        padding: 20px;
+        margin: 30px 10px;
+        background-color: rgb(94, 46, 133);
+        color: #fff;
+        font-weight: bold;
+        }
+
+        #imgUl {
+        display: flex;
+        list-style: none;
+        flex-wrap: wrap;
+        margin-left: 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="btns">
+        <button id="xhr">click for Img with XHR</button>
+        <button id="axi">click for Img with Axios</button>
+    </div>
+
+    <div id="imgDiv">
+        <ul id="imgUl"></ul>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="./dogPhoto.js" ></script>
+</body>
+
+</html>
