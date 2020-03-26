@@ -9,13 +9,12 @@
   function fetchJSON(url){
     return fetch (url)
     .then(response => {
-      if (response.status >= 200 && response.status <= 299) {
+      if (response.ok) {
         return response.json()
       }else {
         throw new Error(`Network error: ${response.status} - ${response.statusText}`);
       }
     })
-    .then(data => data)
     .catch(err => errorHandler(err));
   }
   
@@ -69,64 +68,55 @@
   const repoContainer = document.querySelector('.repo-container');
   const contributorsContainer= document.querySelector('.contributors-container');
  
-  // sorting the list repositories with .sort() and .localeCompare()
-  const repos = repos.sort((curRepo, nextRepo) => curRepo.name.localeCompare(nextRepo.name))
-  repos.forEach(repo => {
-  const repoName = repo.name.toLowerCase();
-      //adding an option element per repository to the select element
-      createAndAppend('option', select, {
-        value: repo.name,
-        text: repoName,
-      })
-  })
-
   function main(url) {
     fetchJSON(url)
       .then(repos => {
-        const ulRepo = createAndAppend('ul', repoContainer);
-        const ulCont = createAndAppend('ul', contributorsContainer);
-      
-        //sorting the list repositories with .sort() and .localeCompare()
-        repos.sort((curRepo, nextRepo) => curRepo.name.localeCompare(nextRepo.name))
-        repos.forEach(repo => {
-          let repoName = repo.name.toLowerCase();
-          //adding an option element per repository to the select element
-          createAndAppend('option', select, {
-          value: repo.name,
-          text: repoName,
-          });
-      });
-      
-      //adding a dynamic select list,
-      select.addEventListener('change', () => {
-        const urlApi = `https://api.github.com/repos/HackYourFuture/${select.value}/contributors`;
-        fetch(urlApi)
-        .then(res => res.json())
-        .then(data => {
-        ulCont.innerHTML = '';
-        renderContributor(data, ulCont);
-        })
-        .catch(err => console.error(err));
-        ulRepo.innerHTML = '';
-        repos.forEach(repo => {
-            if (repo.name === select.value) {
-            renderRepoDetails(repo, ulRepo);
-            }
-        });
-      });
-    })
+        repos.sort((a, b) => a.name.localeCompare(b.name));
+        createSelectTab(repos);
+      })
       .catch(err => errorHandler(err));
   }
+
+  function createSelectTab(repos) {
+    const ulRepo = createAndAppend('ul', repoContainer);
+    const ulCont = createAndAppend('ul', contributorsContainer);
   
-  function renderContributor(data, ulCont) {
-    for (let i = 0; i < data.length; ++i) {
+    repos.forEach(repo => {
+      let repoName = repo.name.toLowerCase();
+      //adding an option element per repository to the select element
+      createAndAppend('option', select, {
+      value: repo.name,
+      text: repoName,
+      });
+    });
+    
+    //adding a dynamic select list,
+    select.addEventListener('change', () => {
+      ulRepo.innerHTML = '';
+      ulCont.innerHTML = '';
+      const urlApi = `https://api.github.com/repos/HackYourFuture/${select.value}/contributors`;
+        fetch(urlApi)
+        	.then(res => res.json())
+       	 	.then(contributors => {
+      			renderContributor(contributors, ulCont);
+          })
+          repos.forEach(repo => {
+            if (repo.name === select.value) {
+              renderRepoDetails(repo, ulRepo);
+              }
+          });
+    });
+  }
+  
+  function renderContributor(contributors, ulCont) {
+    for (let i = 0; i < contributors.length; ++i) {
         const li = createAndAppend('li', ulCont);
         const table = createAndAppend('table', li);
         const tr = createAndAppend('tr', table);
         const th = createAndAppend('th', tr);
-        createAndAppend('img', th, {src: data[i].avatar_url});
-        createAndAppend('a', th, {text: data[i].login, href: data[i].html_url,target: '_blank'});
-        createAndAppend('td', tr, {text: data[i].contributions, class: 'smallNumbers'});
+        createAndAppend('img', th, {src: contributors[i].avatar_url});
+        createAndAppend('a', th, {text: contributors[i].login, href: contributors[i].html_url,target: '_blank'});
+        createAndAppend('td', tr, {text: contributors[i].contributions, class: 'smallNumbers'});
     }
   }
 }
