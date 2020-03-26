@@ -48,10 +48,10 @@
     const keys = ['name', 'description', 'forks', 'updated_at'];
 
     // here the detailed elements of the table are created.
-    for (let i = 0; i < titles.length; ++i) {
+    titles.forEach((title, index) =>{
       let tr = createAndAppend('tr', table);
-      createAndAppend('th', tr, { text: titles[i] });
-      if (i > 0) createAndAppend('td', tr, { text: repo[keys[i]] });
+      createAndAppend('th', tr, { text: title });
+      if (index > 0) createAndAppend('td', tr, { text: repo[keys[index]] });
       else {
         const td = createAndAppend('td', tr);
         createAndAppend('a', td, {
@@ -60,7 +60,7 @@
           target: '_blank',
         });
       }
-    }
+    })
   }
 
   //creating new variables for the html elements to use in the next function.
