@@ -1,3 +1,106 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body { 
+  padding: 1.5rem;
+  background-color: rgb(241, 236, 236);
+}
+
+img {
+  max-width: 3rem;
+  height: 3rem;
+  margin-right: 1.5rem;
+}
+
+header {
+  background-color: #3f51b5;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: left;
+  width: 96vw;
+  padding: 2rem;
+  margin-bottom: 0.3rem;
+  margin: auto;
+}
+
+select{
+  width: 15rem;
+  height: 2rem;
+  font-size: 0.9rem;
+}
+
+table {
+  width: 100%;
+  margin-top: 0.2rem;
+  padding: 1.25rem;
+  border: 1px solid rgb(240, 240, 240) ;
+  border-radius: 0.4rem;
+  box-shadow: 0px 3px 3px  rgb(179, 178, 178) ;
+  color: #333;
+}
+
+th {
+  width: 10%;
+  padding: 0.2rem;
+  display: flex;  
+}
+
+li {
+  list-style: none;
+  background-color: rgb(255, 255, 255);
+}
+
+a {
+  display: flex;
+  align-self: center;
+}
+
 .alert-error {
   color: red;
+  background-color: #fcf7f8;
+  padding: 1.25rem;
+}
+
+.smallNumbers {
+  padding: 0.3rem;
+  background-color: rgb(151, 148, 148);
+  color: whitesmoke;
+  border-radius: 0.3rem;
+  font-size: 0.75rem;
+  float:right;
+}
+
+.main-container {
+  display: flex;
+}
+
+.repo-container  {
+  display: flex;
+  justify-content: space-between;
+}
+
+.repo-container,
+.contributors-container, ul{
+  width: 100%;
+}
+
+@media screen and (max-width: 650px) {
+
+  html {
+    font-size: 0.75rem;
+  }
+
+  body {
+    width: 90%;
+    margin: auto;
+  }
+
+  header {
+    width: 100%;
+    margin: auto;
+  }
 }
